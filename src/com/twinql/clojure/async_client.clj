@@ -56,7 +56,7 @@
   (:require [com.twinql.clojure.async-libs :as async]))
 
 
-(def #^AllowAllHostnameVerifier allow-all-hostname-verifier
+(def ^AllowAllHostnameVerifier allow-all-hostname-verifier
      (AllowAllHostnameVerifier.))
 
 
@@ -96,26 +96,26 @@
 (defrecord InternalExceptionHandler
   [fn]
   org.apache.http.nio.reactor.IOReactorExceptionHandler
-  (#^boolean handle [this #^IOException ex] (fn ex))
-  (#^boolean handle [this #^RuntimeException ex] (fn ex)))
+  (^boolean handle [this ^IOException ex] (fn ex))
+  (^boolean handle [this ^RuntimeException ex] (fn ex)))
 
 (defrecord KeepAliveStrategy
-  [#^long milliseconds]
+  [^long milliseconds]
   org.apache.http.conn.ConnectionKeepAliveStrategy
   (getKeepAliveDuration [this response context] milliseconds))
 
-(defn #^CountDownLatch countdown-latch
+(defn ^CountDownLatch countdown-latch
   "Returns a CountdownLatch for managing async IO. Param num-requests must
    specify the number of http requests that the callback will be handling."
   [num-requests]
   (CountDownLatch. num-requests))
 
-(defn #^DefaultConnectingIOReactor io-reactor
+(defn ^DefaultConnectingIOReactor io-reactor
   "Returns a new instance of
    org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor"
-  [#^Integer worker-count
-   #^IOReactorExceptionHandler internal-exception-handler
-   #^org.apache.http.params.HttpParams params]
+  [^Integer worker-count
+   ^IOReactorExceptionHandler internal-exception-handler
+   ^org.apache.http.params.HttpParams params]
   (let [reactor (DefaultConnectingIOReactor. worker-count params)]
     (if (not (nil? internal-exception-handler))
       (. reactor setExceptionHandler
@@ -151,7 +151,7 @@
   http-params)
 
 
-(defn #^SyncBasicHttpParams create-http-params
+(defn ^SyncBasicHttpParams create-http-params
   "Returns an HttpParams object with the specified settings. To make your life
    easier, use com.twinql.clojure.http/map->params to construct a map with
    friendly param names. For example:
@@ -173,11 +173,11 @@
     http-params))
 
 
-(defn #^PoolingClientConnectionManager pooling-conn-manager
+(defn ^PoolingClientConnectionManager pooling-conn-manager
   "Returns a PoolingClientConnectionManager"
-  [#^org.apache.http.nio.reactor.ConnectingIOReactor ioreactor
-   #^org.apache.http.nio.conn.scheme.SchemeRegistry registry
-   #^long time-to-live]
+  [^org.apache.http.nio.reactor.ConnectingIOReactor ioreactor
+   ^org.apache.http.nio.conn.scheme.SchemeRegistry registry
+   ^long time-to-live]
   (PoolingClientConnectionManager. ioreactor
                                    registry
                                    time-to-live
@@ -192,7 +192,7 @@
 
 
 
-(defn #^PoolingClientConnectionManager connection-manager
+(defn ^PoolingClientConnectionManager connection-manager
   "Returns a PoolingClientConnectionManager with the specified options.
    Param options is a hash-map that may include the following. Any unset
    vars will default to the value in *default-opts*.

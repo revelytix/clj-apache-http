@@ -28,24 +28,25 @@
     AllowAllHostnameVerifier)
    (org.apache.http.nio.conn.scheme
     Scheme
-    SchemeRegistry)))
+    SchemeRegistry
+    LayeringStrategy)))
 
 
-(defn #^SSLLayeringStrategy layering-strategy
+(defn ^SSLLayeringStrategy layering-strategy
   "Returns a new LayeringStrategy for managing SSL connections."
-  [#^SSLContext ssl-context #^X509HostnameVerifier hostname-verifier]
+  [^SSLContext ssl-context ^X509HostnameVerifier hostname-verifier]
   (let [verifier (or hostname-verifier (AllowAllHostnameVerifier.))]
   (SSLLayeringStrategy. ssl-context verifier)))
 
-(defn #^Scheme scheme
+(defn ^Scheme scheme
   "Returns a new org.apache.http.nio.conn.scheme.Scheme. Param name should
    be \"http\" or \"https\". Param port is the port to connect to on the
    remote host."
-  [#^String name #^long port #^LayeringStrategy strategy]
+  [^String name ^long port ^LayeringStrategy strategy]
   (Scheme. name port strategy))
 
 
-(defn #^Scheme default-http-scheme []
+(defn ^Scheme default-http-scheme []
   (Scheme. "http" 80 nil))
 
 (defn #^Scheme default-https-scheme []
@@ -53,18 +54,18 @@
     (.init ctx nil nil nil)
     (Scheme. "https" 443 (SSLLayeringStrategy. ctx))))
 
-(defn #^SchemeRegistry default-scheme-registry []
+(defn ^SchemeRegistry default-scheme-registry []
   (doto (SchemeRegistry.)
     (. register (default-http-scheme))
     (. register (default-https-scheme))))
 
-(defn #^org.apache.http.nio.conn.scheme.SchemeRegistry scheme-registry
+(defn ^org.apache.http.nio.conn.scheme.SchemeRegistry scheme-registry
   "Creates a scheme registry using the given socket factory to connect
    on the port you specify. This scheme registry is suitable for the async
    http client."
-  [#^SSLSocketFactory socket-factory #^Long port
-   #^SSLLayeringStrategy ssl-layering-strategy]
-  (let [#^SchemeRegistry scheme-registry (SchemeRegistry.)]
+  [^SSLSocketFactory socket-factory ^Long port
+   ^SSLLayeringStrategy ssl-layering-strategy]
+  (let [^SchemeRegistry scheme-registry (SchemeRegistry.)]
     (.register scheme-registry (Scheme. "https" port ssl-layering-strategy))
     scheme-registry))
 
