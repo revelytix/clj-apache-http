@@ -183,7 +183,7 @@
                                    time-to-live
                                    TimeUnit/MILLISECONDS))
 
-(def *default-opts*
+(def ^:dynamic *default-opts*
      {:worker-threads 1
       :hostname-verifier allow-all-hostname-verifier
       :time-to-live 4000
