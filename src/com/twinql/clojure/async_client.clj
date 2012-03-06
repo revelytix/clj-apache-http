@@ -45,6 +45,8 @@
             StrictHostnameVerifier))
   (:import (org.apache.http.impl.nio.reactor
             DefaultConnectingIOReactor))
+  (:import (org.apache.http.nio.reactor
+            IOReactorExceptionHandler))
   (:import (org.apache.commons.codec.binary
             Base64))
   (:require [clojure.string :as string])

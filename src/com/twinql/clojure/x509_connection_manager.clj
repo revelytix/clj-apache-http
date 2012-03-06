@@ -37,7 +37,11 @@
    (org.apache.http.nio.conn.ssl
     SSLLayeringStrategy)
    (org.apache.http.entity
-    StringEntity)))
+    StringEntity)
+   (org.apache.http.conn.scheme
+    SchemeRegistry)
+   (javax.net.ssl
+    X509TrustManager)))
 
 
 

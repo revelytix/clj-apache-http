@@ -41,7 +41,7 @@
   "Returns a new org.apache.http.nio.conn.scheme.Scheme. Param name should
    be \"http\" or \"https\". Param port is the port to connect to on the
    remote host."
-  [#^String name #^int port #^LayeringStrategy strategy]
+  [#^String name #^long port #^LayeringStrategy strategy]
   (Scheme. name port strategy))
 
 
@@ -62,7 +62,7 @@
   "Creates a scheme registry using the given socket factory to connect
    on the port you specify. This scheme registry is suitable for the async
    http client."
-  [#^SSLSocketFactory socket-factory #^Integer port
+  [#^SSLSocketFactory socket-factory #^Long port
    #^SSLLayeringStrategy ssl-layering-strategy]
   (let [#^SchemeRegistry scheme-registry (SchemeRegistry.)]
     (.register scheme-registry (Scheme. "https" port ssl-layering-strategy))
