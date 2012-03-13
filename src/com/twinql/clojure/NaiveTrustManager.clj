@@ -40,16 +40,16 @@
 ;; is trusted.
 ;;
 (defn -checkClientTrusted
-  [#^NaiveTrustManager this #^"[LX509Certificate;" chain #^String auth-type]
+  [^com.twinql.clojure.NaiveTrustManager this ^"[Ljava.security.cert.X509Certificate;" chain ^String auth-type]
   "Always returns nil, never throws CertificateException"
   nil)
 
 (defn -checkServerTrusted
-  [#^NaiveTrustManager this #^"[LX509Certificate;" chain #^String auth-type]
+  [^com.twinql.clojure.NaiveTrustManager this ^"[Ljava.security.cert.X509Certificate;" chain ^String auth-type]
   "Always returns nil, never throws CertificateException"
   nil)
 
-(defn #^"[LX509Certificate;" -getAcceptedIssuers [#^NaiveTrustManager this]
+(defn ^"[Ljavax.net.ssl.X509Certificate;" -getAcceptedIssuers [^com.twinql.clojure.NaiveTrustManager this]
   "Always returns nil"
   nil)
 

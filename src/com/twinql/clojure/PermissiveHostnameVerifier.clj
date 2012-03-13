@@ -20,20 +20,20 @@
    :constructors {[] []}))
 
 (defn -verify
-  [#^PermissiveHostnameVerifier this #^String host #^SSLSocket socket]
+  [^com.twinql.clojure.PermissiveHostnameVerifier this ^String host ^javax.net.ssl.SSLSocket socket]
   "Always returns null"
   (println "Called first version")
   nil)
 
 (defn -verify
-  [#^PermissiveHostnameVerifier this #^String host
-   #^"[String;" cns #^"[String;" subjectAlts]
+  [^com.twinql.clojure.PermissiveHostnameVerifier this ^String host
+   ^String cns ^String subjectAlts]
   "Always returns null"
   (println "Called second version")
   nil)
 
 (defn -verify
-  [#^PermissiveHostnameVerifier this #^String host #^X509Certificate cert]
+  [^com.twinql.clojure.PermissiveHostnameVerifier this ^String host ^java.security.cert.X509Certificate cert]
   "Always returns null"
   (println "Called third version")
   nil)
