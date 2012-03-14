@@ -1,4 +1,4 @@
- (defproject revelytix/clj-apache-https "1.0.20-SNAPSHOT"
+ (defproject revelytix/clj-apache-https "1.0.20"
   :description "Clojure HTTP library using the Apache HttpClient. Based on clj-apache-http, but includes support for SSL client certificates and HttpAsyncClient."
 
   :dependencies [[org.clojure/clojure "1.3.0"]
