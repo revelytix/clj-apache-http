@@ -14,7 +14,9 @@
    (javax.net.ssl
     KeyManagerFactory
     SSLContext
-    HttpsURLConnection)
+    HttpsURLConnection
+    SSLSocket
+    X509TrustManager)
    (java.io
     File
     InputStream
@@ -39,11 +41,29 @@
    (org.apache.http.entity
     StringEntity)
    (org.apache.http.conn.scheme
-    SchemeRegistry)
-   (javax.net.ssl
-    X509TrustManager)))
+    SchemeRegistry)))
 
+(def ^{:doc "Permissive verifier is useful for testing, doesn't check that the hostname you 
+             are requesting matches the hostname on the certificate"}
+  permissive-verifier
+  (reify X509HostnameVerifier
+    (^void verify [_  ^String _ ^SSLSocket _]
+      (println "Called first version"))
+    (^void verify [_ ^String _ ^"[Ljava.lang.String;" _ ^"[Ljava.lang.String;" _]
+      (println "Called second version"))
+    (^void verify [_ ^String _ ^X509Certificate _]
+      (println "Called third version"))))
 
+(def ^{:doc "Naive trust manager, useful for testing, always accepts the certificate
+             from the server, never throws an exception that the certificate isn't trusted,
+             is out of date etc."}
+  naive-trust-manager
+  (reify X509TrustManager
+    (checkClientTrusted
+      [_ _ _] nil)
+    (checkServerTrusted
+      [_ _ _] nil)
+    (getAcceptedIssuers [_] nil)))
 
 (defn- #^InputStream load-embedded-resource
   "Loads a resource embedded in a jar file. Returns an InputStream"
